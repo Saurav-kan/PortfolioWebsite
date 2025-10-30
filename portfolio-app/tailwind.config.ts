@@ -8,12 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)', 'sans-serif'],
+        serif: ['var(--font-lora)', 'serif'],
+      },
       colors: {
-        'primary': '#000000',
-        'secondary': '#FFFFFF',
-        'accent1': '#FF4081',
-        'accent2': '#7C4DFF',
-        'accent3': '#448AFF',
+        'primary-dark': '#36453A',
+        'accent-vibrant': '#C5C850',
+        'base-background': '#F7F7F2',
+        'secondary-earth': '#8D5432',
       },
       borderRadius: {
         'bubble': '2rem',

@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Lora } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: '--font-inter',
+});
+
+const lora = Lora({
+  subsets: ["latin"],
+  variable: '--font-lora',
+});
 
 export const metadata: Metadata = {
   title: "My Portfolio",
@@ -16,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-900 text-white`}>{children}</body>
+      <body className={`${inter.variable} ${lora.variable} font-sans`}>{children}</body>
     </html>
   );
 }
