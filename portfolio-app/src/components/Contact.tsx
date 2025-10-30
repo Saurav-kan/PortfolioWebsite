@@ -1,15 +1,42 @@
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import Reveal from "./Reveal";
+
 const Contact = () => {
   return (
-    <section id="contact" className="py-20 bg-gray-900 text-white">
+    <section id="contact" className="py-20 text-white">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-8">Contact Me</h2>
-        <p className="text-lg mb-4">Feel free to reach out to me via email or connect with me on social media.</p>
-        <a href="mailto:youremail@example.com" className="text-blue-400 hover:underline text-xl">youremail@example.com</a>
-        <div className="flex justify-center space-x-4 mt-8">
-          <a href="#" className="text-gray-400 hover:text-white">LinkedIn</a>
-          <a href="#" className="text-gray-400 hover:text-white">GitHub</a>
-          <a href="#" className="text-gray-400 hover:text-white">Twitter</a>
-        </div>
+        <h2 className="text-4xl font-bold mb-12">Get In Touch</h2>
+        <Reveal className="max-w-lg mx-auto">
+          <div className="bg-gray-900 p-8 rounded-3xl shadow-lg">
+            <p className="text-lg mb-8">
+              I'm currently seeking Summer 2026 internship opportunities. If you have an exciting role or project in mind, I'd love to hear from you.
+            </p>
+            <div className="flex justify-center space-x-8">
+              <a
+                href="mailto:sauravk0633@gmail.com"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <FaEnvelope size={32} />
+              </a>
+              <a
+                href="https://github.com/saurav-kan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <FaGithub size={32} />
+              </a>
+              <a
+                href="https://linkedin.com/in/saurav-kan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <FaLinkedin size={32} />
+              </a>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
