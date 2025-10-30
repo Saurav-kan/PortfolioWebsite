@@ -9,7 +9,7 @@ const Contact = () => {
         <Reveal className="max-w-lg mx-auto">
           <div className="bg-gray-900 p-8 rounded-3xl shadow-lg">
             <p className="text-lg mb-8">
-              I'm currently seeking Summer 2026 internship opportunities. If you have an exciting role or project in mind, I'd love to hear from you.
+              I&aposm currently seeking Summer 2026 internship opportunities. If you have an exciting role or project in mind, I&apos;d love to hear from you.
             </p>
             <div className="flex justify-center space-x-8">
               <a
