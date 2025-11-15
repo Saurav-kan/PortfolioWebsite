@@ -2,25 +2,18 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import DarkModeToggle from "./DarkModeToggle";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
 
-  console.log("Navbar rendering with visible:", visible);
-
   useEffect(() => {
-    console.log("Setting up event listeners");
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      console.log(
-        `Scroll event: currentY=${currentScrollY}, lastY=${lastScrollY.current}`
-      );
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        console.log("Decision: HIDE (scrolling down)");
         setVisible(false);
       } else {
-        console.log("Decision: SHOW (scrolling up or at top)");
         setVisible(true);
       }
       lastScrollY.current = currentScrollY;
@@ -29,13 +22,11 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      console.log("Cleaning up event listeners");
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handleMouseEnter = () => {
-    console.log("Mouse entered top area, setting visible: true");
     setVisible(true);
   };
 
@@ -53,34 +44,35 @@ const Navbar = () => {
           visible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <nav className="bg-primary-dark/70 backdrop-blur-lg rounded-full border border-secondary-earth/30 shadow-lg shadow-primary-dark/20">
-          <div className="container mx-auto px-6 py-3 flex justify-center items-center">
+        <nav className="neu-flat rounded-full transition-all duration-300">
+          <div className="container mx-auto px-6 py-3 flex justify-center items-center gap-4">
             <div className="space-x-6 md:space-x-8">
               <Link
                 href="#about"
-                className="text-base-background hover:text-accent-vibrant transition-colors"
+                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
               >
                 About
               </Link>
               <Link
                 href="#projects"
-                className="text-base-background hover:text-accent-vibrant transition-colors"
+                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
               >
                 Projects
               </Link>
               <Link
                 href="#skills"
-                className="text-base-background hover:text-accent-vibrant transition-colors"
+                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
               >
                 Skills
               </Link>
               <Link
                 href="#contact"
-                className="text-base-background hover:text-accent-vibrant transition-colors"
+                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
               >
                 Contact
               </Link>
             </div>
+            <DarkModeToggle />
           </div>
         </nav>
       </header>

@@ -12,19 +12,25 @@ const Hero = () => {
       className="h-screen flex items-center justify-center text-center"
     >
       <div
-        ref={ref as any}
+        ref={ref}
         className={`flex flex-col items-center transition-all duration-700 ease-out ${
           revealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        <h1 className="text-7xl font-bold mb-4 font-serif">Saurav Kandel</h1>
-        <p className="text-2xl mb-8">Full-Stack Developer | AI/ML Enthusiast</p>
-        <div className="flex space-x-4">
+        <div className="neu-convex rounded-3xl px-12 py-8 mb-8">
+          <h1 className="text-7xl font-bold mb-4 font-serif text-neu-text">
+            Saurav Kandel
+          </h1>
+          <p className="text-2xl text-neu-accent">
+            Full-Stack Developer | AI/ML Enthusiast
+          </p>
+        </div>
+        <div className="flex space-x-6">
           <a
             href="https://github.com/saurav-kan"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary-dark hover:text-accent-vibrant transition-colors"
+            className="neu-flat rounded-full p-4 neu-hover neu-active transition-all duration-200 text-neu-text hover:text-neu-accent"
           >
             <FaGithub size={32} />
           </a>
@@ -32,7 +38,7 @@ const Hero = () => {
             href="https://linkedin.com/in/saurav-kan"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary-dark hover:text-accent-vibrant transition-colors"
+            className="neu-flat rounded-full p-4 neu-hover neu-active transition-all duration-200 text-neu-text hover:text-neu-accent"
           >
             <FaLinkedin size={32} />
           </a>
