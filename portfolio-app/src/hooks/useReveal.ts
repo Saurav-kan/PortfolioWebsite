@@ -8,9 +8,11 @@ type Options = {
   threshold?: number | number[];
 };
 
-const useReveal = (options: Options = {}) => {
+const useReveal = <T extends HTMLElement = HTMLDivElement>(
+  options: Options = {}
+) => {
   const { root = null, rootMargin = "0px", threshold = 0.15 } = options;
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<T | null>(null);
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
