@@ -5,6 +5,7 @@ import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import BackgroundTexture from "@/components/BackgroundTexture";
+// import ElephantMascot from "@/components/ElephantMascot";
 
 const Footer = () => {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
         <Contact />
         <Footer />
       </div>
+      {/* <ElephantMascot /> */}
     </main>
   );
 }

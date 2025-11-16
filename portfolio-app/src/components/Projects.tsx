@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 type ProjectCategory = "All" | "AI/ML" | "Web Dev" | "Mobile";
@@ -100,7 +101,7 @@ const Projects = () => {
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((category) => (
-            <button
+            <motion.button
               key={category}
               onClick={() => handleCategoryChange(category)}
               className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
@@ -108,9 +109,12 @@ const Projects = () => {
                   ? "neu-pressed text-neu-accent"
                   : "neu-flat neu-hover text-neu-text"
               }`}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               {category}
-            </button>
+            </motion.button>
           ))}
         </div>
 
@@ -125,8 +129,8 @@ const Projects = () => {
             {/* Left Column: Project List */}
             <div className="md:col-span-1">
               <ul className="space-y-4">
-                {filteredProjects.map((project) => (
-                  <li
+                {filteredProjects.map((project, index) => (
+                  <motion.li
                     key={project.name}
                     onMouseEnter={() => setActiveProject(project)}
                     onClick={() => setActiveProject(project)}
@@ -135,9 +139,18 @@ const Projects = () => {
                         ? "neu-pressed"
                         : "neu-flat neu-hover"
                     }`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    whileHover={{
+                      scale: 1.02,
+                      y: -4,
+                      transition: { duration: 0.2 },
+                    }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <h3
-                      className={`text-2xl font-serif font-bold ${
+                      className={`text-2xl font-serif font-bold transition-colors duration-300 ${
                         activeProject.name === project.name
                           ? "text-neu-accent"
                           : "text-neu-text"
@@ -151,7 +164,7 @@ const Projects = () => {
                     <span className="inline-block mt-2 text-xs text-neu-text/50 px-2 py-1 rounded-full neu-concave">
                       {project.category}
                     </span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </div>
@@ -159,21 +172,31 @@ const Projects = () => {
             {/* Right Column: Project Preview */}
             <div className="md:col-span-2">
               <div className="sticky top-28">
-                <div className="neu-convex rounded-3xl p-8">
+                <motion.div
+                  className="neu-convex rounded-3xl p-8"
+                  key={activeProject.name}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
                   <h3 className="text-3xl font-bold font-serif mb-6 text-neu-text">
                     {activeProject.name}
                   </h3>
-                  <div className="w-full h-96 mb-6 rounded-2xl neu-flat p-1">
+                  <motion.div
+                    className="w-full h-96 mb-6 rounded-2xl neu-flat p-1"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
                     <div className="relative w-full h-full rounded-2xl overflow-hidden">
                       <Image
                         src={activeProject.image}
                         alt={activeProject.name}
                         fill
-                        className="object-cover rounded-2xl"
+                        className="object-cover rounded-2xl transition-transform duration-300 hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 66vw"
                       />
                     </div>
-                  </div>
+                  </motion.div>
                   <p className="text-lg text-neu-text mb-6 leading-relaxed">
                     {activeProject.summary}
                   </p>
@@ -190,24 +213,38 @@ const Projects = () => {
                     </ul>
                   </div>
                   <div className="flex justify-end space-x-4">
-                    <a
+                    <motion.a
                       href={activeProject.live_demo_link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="neu-flat rounded-full p-3 neu-hover neu-active transition-all duration-200 text-neu-text hover:text-neu-accent"
+                      whileHover={{ scale: 1.1, y: -2, rotate: 5 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                     >
                       <FaExternalLinkAlt size={24} />
-                    </a>
-                    <a
+                    </motion.a>
+                    <motion.a
                       href={activeProject.github_link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="neu-flat rounded-full p-3 neu-hover neu-active transition-all duration-200 text-neu-text hover:text-neu-accent"
+                      whileHover={{ scale: 1.1, y: -2, rotate: -5 }}
+                      whileTap={{ scale: 0.9 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                     >
                       <FaGithub size={24} />
-                    </a>
+                    </motion.a>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>

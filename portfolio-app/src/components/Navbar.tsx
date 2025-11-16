@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import DarkModeToggle from "./DarkModeToggle";
 
 const Navbar = () => {
@@ -46,31 +47,33 @@ const Navbar = () => {
       >
         <nav className="neu-flat rounded-full transition-all duration-300">
           <div className="container mx-auto px-6 py-3 flex justify-center items-center gap-4">
-            <div className="space-x-6 md:space-x-8">
-              <Link
-                href="#about"
-                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
-              >
-                About
-              </Link>
-              <Link
-                href="#projects"
-                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
-              >
-                Projects
-              </Link>
-              <Link
-                href="#skills"
-                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
-              >
-                Skills
-              </Link>
-              <Link
-                href="#contact"
-                className="text-neu-text hover:text-neu-accent transition-colors font-medium"
-              >
-                Contact
-              </Link>
+            <div className="flex items-center space-x-6 md:space-x-8">
+              {[
+                { href: "#about", label: "About" },
+                { href: "#projects", label: "Projects" },
+                { href: "#skills", label: "Skills" },
+                { href: "#contact", label: "Contact" },
+              ].map((link) => (
+                <motion.div
+                  key={link.href}
+                  className="relative"
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="text-neu-text hover:text-neu-accent transition-colors font-medium relative inline-block group"
+                  >
+                    {link.label}
+                    <motion.span
+                      className="absolute bottom-0 left-0 h-0.5 bg-neu-accent"
+                      initial={{ width: 0 }}
+                      whileHover={{ width: "100%" }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    />
+                  </Link>
+                </motion.div>
+              ))}
             </div>
             <DarkModeToggle />
           </div>

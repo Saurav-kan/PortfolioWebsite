@@ -4,6 +4,13 @@
 
 html {
   scroll-behavior: smooth;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 body {
@@ -13,6 +20,13 @@ body {
   position: relative;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .dark body {
@@ -115,5 +129,26 @@ body {
   .dark .neu-active:active {
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5),
       inset -5px -5px 10px rgba(40, 45, 55, 0.5);
+  }
+
+  /* Idle tilt animation for elephant mascot */
+  @keyframes idleTilt {
+    0%, 100% {
+      transform: rotate(-2deg);
+    }
+    50% {
+      transform: rotate(2deg);
+    }
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
