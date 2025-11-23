@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Lora } from "next/font/google";
+import { Inter, Lora, Kalam } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
@@ -11,6 +11,12 @@ const inter = Inter({
 const lora = Lora({
   subsets: ["latin"],
   variable: "--font-lora",
+});
+
+const kalam = Kalam({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  variable: "--font-kalam",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${lora.variable} font-sans`}>
+      <body className={`${inter.variable} ${lora.variable} ${kalam.variable} font-sans`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

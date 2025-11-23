@@ -14,12 +14,16 @@ html::-webkit-scrollbar {
 }
 
 body {
-  background-color: #d4d9e0;
+  background-color: #f8f9fa; /* Clean paper-like white */
+  background-image: 
+    linear-gradient(#e5e7eb 1px, transparent 1px),
+    linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+  background-size: 40px 40px;
   color: #2d3748;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -30,8 +34,87 @@ body::-webkit-scrollbar {
 }
 
 .dark body {
-  background-color: #1a1d24;
+  background-color: #1a202c;
+  background-image: 
+    linear-gradient(#2d3748 1px, transparent 1px),
+    linear-gradient(90deg, #2d3748 1px, transparent 1px);
+  background-size: 40px 40px;
   color: #e2e8f0;
+}
+
+:root {
+  /* Vibrant Nepali Flag Colors */
+  --nepali-red: #DC143C; /* Crimson Red - Vibrant */
+  --nepali-blue: #003893; /* Dark Blue - Vibrant/Deep */
+  --paper-white: #f8f9fa;
+  --ink-black: #1a202c;
+}
+
+/* Scrapbook utility classes */
+@layer utilities {
+  .scrapbook-card {
+    background: #ffffff;
+    border-radius: 2px; /* Sharper corners for paper feel */
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1); /* Hard shadow for cutout look */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .dark .scrapbook-card {
+    background: #2d3748;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .scrapbook-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px rgba(220, 20, 60, 0.2); /* Red shadow on hover (Light Mode) */
+  }
+
+  .dark .scrapbook-card:hover {
+    box-shadow: 8px 8px 0px rgba(0, 56, 147, 0.4); /* Blue shadow on hover (Dark Mode) */
+  }
+
+  .scrapbook-tilt {
+    transform: rotate(-1deg);
+  }
+
+  .scrapbook-tilt-alt {
+    transform: rotate(1deg);
+  }
+
+  .scrapbook-tilt-alt {
+    transform: rotate(1.5deg);
+  }
+
+  .scrapbook-tilt-reverse {
+    transform: rotate(-1deg);
+  }
+
+  .handwritten {
+    font-family: var(--font-kalam), cursive;
+  }
+
+  .sticky-note {
+    background: #ffeb3b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: rotate(-2deg);
+  }
+
+  .polaroid {
+    background: #ffffff;
+    padding: 12px 12px 60px 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: rotate(1deg);
+  }
+
+  .polaroid-caption {
+    font-family: var(--font-kalam), cursive;
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 8px;
+    text-align: center;
+  }
 }
 
 /* Text color utilities for dark mode */

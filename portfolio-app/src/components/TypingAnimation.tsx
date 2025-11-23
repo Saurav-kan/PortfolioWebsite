@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 interface TypingAnimationProps {
   text: string | string[];
@@ -22,7 +22,7 @@ const TypingAnimation = ({
   const [isDeleting, setIsDeleting] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
-  const texts = Array.isArray(text) ? text : [text];
+  const texts = useMemo(() => Array.isArray(text) ? text : [text], [text]);
 
   useEffect(() => {
     if (isPaused) return;

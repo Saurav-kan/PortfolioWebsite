@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
         serif: ["var(--font-lora)", "serif"],
+        handwritten: ["var(--font-kalam)", "cursive"],
       },
       colors: {
         "neu-bg": "#D4D9E0",
@@ -19,7 +20,16 @@ const config: Config = {
         "neu-accent": "#4A5568",
         "neu-light": "#F7FAFC",
         "neu-dark": "#CBD5E0",
+        "scrapbook-bg": "#f5f5f0",
+        "scrapbook-yellow": "#ffeb3b",
+        "scrapbook-red": "#d32f2f",
+        "scrapbook-blue": "#1976d2",
+        "scrapbook-dark": "#1a1a1a",
+        "scrapbook-gray": "#666666",
+        "nepali-red": "#DC143C",
+        "nepali-blue": "#003893",
       },
+
       boxShadow: {
         "neu-sm":
           "6px 6px 12px rgba(140, 150, 170, 0.5), -6px -6px 12px rgba(255, 255, 255, 0.7)",

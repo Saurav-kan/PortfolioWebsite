@@ -1,49 +1,62 @@
 "use client";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaBriefcase } from "react-icons/fa";
 import Reveal from "./Reveal";
+import { motion } from "framer-motion";
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-20">
-      <div className="container mx-auto px-4 text-center">
-        <h2 className="text-4xl font-bold mb-12 font-serif text-neu-text">
-          Get In Touch
-        </h2>
-        <Reveal className="max-w-lg mx-auto">
-          <div className="neu-convex rounded-3xl p-8 md:p-12">
-            <p className="text-lg text-neu-text mb-8 leading-relaxed">
-              I&apos;m currently seeking Summer 2026 internship opportunities. If
-              you have an exciting role or project in mind, I&apos;d love to hear
-              from you.
+    <>
+      <section id="contact" className="py-20 bg-scrapbook-blue dark:bg-blue-900">
+        <div className="container mx-auto px-4 text-center">
+          <Reveal className="max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+              Let&apos;s build something cool together
+            </h2>
+            <p className="text-gray-300 dark:text-gray-200 text-lg mb-12">
+              Austin, TX • Open to Opportunities
             </p>
-            <div className="flex justify-center space-x-6">
-              <a
+            <div className="flex flex-wrap justify-center gap-6 mb-12">
+              <motion.a
                 href="mailto:sauravk0633@gmail.com"
-                className="neu-flat rounded-full p-4 neu-hover neu-active transition-all duration-200 text-neu-text hover:text-neu-accent"
+                className="flex items-center gap-3 text-white hover:text-scrapbook-yellow transition-colors"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <FaEnvelope size={32} />
-              </a>
-              <a
-                href="https://github.com/saurav-kan"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="neu-flat rounded-full p-4 neu-hover neu-active transition-all duration-200 text-neu-text hover:text-neu-accent"
+                <FaEnvelope size={24} />
+                <span>sauravk0633@gmail.com</span>
+              </motion.a>
+              <motion.a
+                href="tel:9458994236"
+                className="flex items-center gap-3 text-white hover:text-scrapbook-yellow transition-colors"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <FaGithub size={32} />
-              </a>
-              <a
+                <FaPhone size={24} />
+                <span>945-899-4236</span>
+              </motion.a>
+              <motion.a
                 href="https://linkedin.com/in/saurav-kan"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="neu-flat rounded-full p-4 neu-hover neu-active transition-all duration-200 text-neu-text hover:text-neu-accent"
+                className="flex items-center gap-3 text-white hover:text-scrapbook-yellow transition-colors"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <FaLinkedin size={32} />
-              </a>
+                <FaLinkedin size={24} />
+                <span>LinkedIn</span>
+              </motion.a>
             </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
+          </Reveal>
+        </div>
+      </section>
+      <footer className="bg-scrapbook-blue dark:bg-blue-950 text-white py-8">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm text-gray-300 dark:text-gray-400">
+            © 2025 Saurav Kandel. Built with care.
+          </p>
+        </div>
+      </footer>
+    </>
   );
 };
 
