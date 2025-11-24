@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "@/contexts/ThemeContext";
+import Image from "next/image";
 
 
 const DarkModeToggle = () => {
@@ -26,18 +27,19 @@ const DarkModeToggle = () => {
         </svg>
 
         {/* Moon Icon (Nepali Chandra - Crescent with Star/Sun) */}
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className={`absolute inset-0 w-full h-full text-white transition-all duration-500 ${
+        {/* Moon Icon (Nepali Chandra - Crescent with Star/Sun) */}
+        <div
+          className={`absolute inset-0 w-full h-full transition-all duration-500 ${
             theme === "light" ? "opacity-0 -rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"
           }`}
         >
-          {/* Crescent */}
-          <path d="M12 20C16.4183 20 20 16.4183 20 12C20 10.5333 19.6059 9.1602 18.9113 7.9759C18.2124 11.4866 15.1365 14.1333 11.3333 14.1333C7.53019 14.1333 4.45426 11.4866 3.75537 7.9759C3.06074 9.1602 2.66667 10.5333 2.66667 12C2.66667 16.4183 6.24839 20 10.6667 20H12Z" />
-          {/* Star/Sun above crescent */}
-          <path d="M12 4L13 6L15 6.5L13.5 8L14 10L12 9L10 10L10.5 8L9 6.5L11 6L12 4Z" />
-        </svg>
+          <Image
+            src="/assets/moon-symbol.png"
+            alt="Dark Mode"
+            fill
+            className="object-contain invert"
+          />
+        </div>
       </div>
     </button>
   );

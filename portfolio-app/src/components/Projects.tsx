@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaGithub, FaExternalLinkAlt, FaStar } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import ProjectModal from "./ProjectModal";
 
-type ProjectCategory = "Starred (Resume)" | "All Projects" | "AI & ML" | "Full Stack" | "Design" | "Mobile";
+type ProjectCategory = "Starred" | "All Projects" | "AI & ML" | "Full Stack" | "Design" | "Mobile";
 
 interface Project {
   name: string;
@@ -154,10 +154,39 @@ const projects: Project[] = [
     ],
     reflections: "This project proved that separating 'planning' from 'coding' in LLM workflows significantly reduces hallucinations and improves structural integrity."
   },
+  {
+    name: "Portfolio Website",
+    tech_stack: "Next.js, TypeScript, Tailwind CSS, Framer Motion",
+    summary: "My personal digital garden and showcase.",
+    preview_text: "A modern, interactive scrapbook of my work.",
+    details: [
+      "Designed a unique 'Modern Scrapbook' aesthetic combining digital precision with organic, tactile elements",
+      "Implemented complex interactive animations using Framer Motion for a premium feel",
+    ],
+    live_demo_link: "https://portfolio-website-ten.vercel.app/",
+    github_link: "https://github.com/saurav-kan/portfolio-website",
+    image: "/images/projects/portfolio-preview.webp",
+    images: [
+      "/images/projects/portfolio-1.png", 
+      "/images/projects/portfolio-2.png",
+      "/images/projects/portfolio-3.png"
+    ],
+    accent_color: "border-nepali-red",
+    categories: ["Starred", "Design"],
+    starred: true,
+    frontend_intent: "Crafted a visually distinct identity that breaks away from standard corporate portfolios while maintaining high usability.",
+    backend_intent: "Optimized for performance and SEO with Next.js server-side rendering and static generation.",
+    technical_details: [
+      "Custom 'Scrapbook' design system with Tailwind CSS.",
+      "Advanced scroll-triggered animations.",
+      "Fully responsive and accessible layout."
+    ],
+    reflections: "Building my own portfolio was an exercise in self-expression and restraint—balancing creativity with the need to clearly communicate my skills."
+  },
 ];
 
 const categories: ProjectCategory[] = [
-  "Starred (Resume)",
+  "Starred",
   "All Projects",
   "AI & ML",
   "Full Stack",
@@ -167,7 +196,7 @@ const categories: ProjectCategory[] = [
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>(
-    "Starred (Resume)"
+    "Starred"
   );
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -178,7 +207,7 @@ const Projects = () => {
   const categoryFiltered =
     activeCategory === "All Projects"
       ? projects
-      : activeCategory === "Starred (Resume)"
+      : activeCategory === "Starred"
       ? projects.filter((p) => p.starred)
       : projects.filter((project) => project.categories.includes(activeCategory));
 
@@ -209,20 +238,42 @@ const Projects = () => {
   const endIndex = startIndex + projectsPerPage;
   const paginatedProjects = filteredProjects.slice(startIndex, endIndex);
 
+  const projectsSectionRef = useRef<HTMLElement>(null);
+
+  const scrollToTop = () => {
+    // Use a small timeout to ensure DOM is updated
+    setTimeout(() => {
+      const element = projectsSectionRef.current || document.getElementById('projects');
+      if (element) {
+        const navbarHeight = 50;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - navbarHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 10);
+  };
+
   const handleCategoryChange = (category: ProjectCategory) => {
     setActiveCategory(category);
     setCurrentPage(1); // Reset to first page when changing category
+    scrollToTop();
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      scrollToTop();
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      scrollToTop();
     }
   };
 
@@ -230,10 +281,11 @@ const Projects = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1);
+    // Optional: scroll to top on search? Maybe not as user is typing.
   };
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-gray-800">
+    <section id="projects" ref={projectsSectionRef} className="py-20 bg-white dark:bg-gray-800 scroll-mt-28">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
@@ -294,7 +346,7 @@ const Projects = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              {category === "Starred (Resume)" && (
+              {category === "Starred" && (
                 <FaStar className={activeCategory === category ? "text-yellow-300" : "text-scrapbook-gray dark:text-gray-400"} />
               )}
               {category === "AI & ML" && <span className="text-lg">🤖</span>}
@@ -305,95 +357,142 @@ const Projects = () => {
         </div>
 
         {/* Project Cards Grid */}
-        {paginatedProjects.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-scrapbook-gray dark:text-gray-400 text-lg">
-              No projects found in this category.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {paginatedProjects.map((project, index) => (
-              <motion.div
-                key={project.name}
-                className="scrapbook-card overflow-hidden bg-white dark:bg-gray-800 border-2 border-transparent dark:border-gray-700 cursor-pointer group relative"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-                onClick={() => setSelectedProject(project)}
-              >
-                {/* Image/Video Section */}
-                <div className="relative w-full h-64 bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900 overflow-hidden">
-                  {project.video_url ? (
-                    <video
-                      className="w-full h-full object-cover"
-                      poster={project.image}
-                      muted
-                      loop
-                      playsInline
-                      onMouseEnter={(e) => e.currentTarget.play()}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.pause();
-                        e.currentTarget.currentTime = 0;
-                      }}
-                    >
-                      <source src={project.video_url} type="video/mp4" />
-                      {/* Fallback to image if video fails to load */}
+        <div className="min-h-[60vh]">
+          {paginatedProjects.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-scrapbook-gray dark:text-gray-400 text-lg">
+                No projects found in this category.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {paginatedProjects.map((project, index) => (
+                <motion.div
+                  key={project.name}
+                  className="scrapbook-card overflow-hidden bg-white dark:bg-gray-800 border-2 border-transparent dark:border-gray-700 cursor-pointer group relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  whileHover={{ y: -4 }}
+                  onClick={() => setSelectedProject(project)}
+                >
+                  {/* Image/Video Section */}
+                  <div className="relative w-full h-64 bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900 overflow-hidden">
+                    {project.video_url ? (
+                      <video
+                        className="w-full h-full object-cover"
+                        poster={project.image}
+                        muted
+                        loop
+                        playsInline
+                        onMouseEnter={(e) => e.currentTarget.play()}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.pause();
+                          e.currentTarget.currentTime = 0;
+                        }}
+                      >
+                        <source src={project.video_url} type="video/mp4" />
+                        {/* Fallback to image if video fails to load */}
+                        <Image 
+                          src={project.image} 
+                          alt={project.name} 
+                          fill 
+                          className="object-cover" 
+                        />
+                      </video>
+                    ) : (
                       <Image 
                         src={project.image} 
                         alt={project.name} 
                         fill 
                         className="object-cover" 
                       />
-                    </video>
-                  ) : (
-                    <Image 
-                      src={project.image} 
-                      alt={project.name} 
-                      fill 
-                      className="object-cover" 
-                    />
-                  )}
-                  
-                  {/* Hover Overlay Preview */}
-                  <motion.div 
-                    className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  >
-                    <p className="text-white font-bold text-lg mb-2">View Details</p>
-                    <p className="text-gray-300 text-sm">{project.preview_text}</p>
-                  </motion.div>
+                    )}
+                    
+                    {/* Hover Overlay Preview */}
+                    <motion.div 
+                      className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                      <p className="text-white font-bold text-lg mb-2">View Details</p>
+                      <p className="text-gray-300 text-sm">{project.preview_text}</p>
+                    </motion.div>
 
-                  {/* Star icon in corner */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <FaStar
-                      className={`${
-                        project.starred
-                          ? "text-yellow-400 fill-current"
-                          : "text-white opacity-50"
-                      }`}
-                      size={24}
-                    />
+                    {/* Star icon in corner */}
+                    <div className="absolute top-4 right-4 z-10">
+                      <FaStar
+                        className={`${
+                          project.starred
+                            ? "text-yellow-400 fill-current"
+                            : "text-white opacity-50"
+                        }`}
+                        size={24}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* Content Section */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-scrapbook-dark dark:text-white mb-2 group-hover:text-nepali-blue transition-colors">
-                    {project.name}
-                  </h3>
-                  <p className="text-scrapbook-gray dark:text-gray-300 mb-4">{project.summary}</p>
-                  <div className="flex justify-between items-center">
-                     <span className="text-xs font-mono text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
-                        {project.tech_stack.split(',')[0]}...
-                     </span>
-                     <span className="text-nepali-red text-sm font-bold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
-                        Read More &rarr;
-                     </span>
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold text-scrapbook-dark dark:text-white mb-2 group-hover:text-nepali-blue transition-colors">
+                      {project.name}
+                    </h3>
+                    <p className="text-scrapbook-gray dark:text-gray-300 mb-4">{project.summary}</p>
+                    <div className="flex justify-left items-center">
+                       <span className="text-xs font-mono text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 mx-1 rounded">
+                        {project.tech_stack.split(',')[0]}
+                       </span>
+                       <span className="text-xs font-mono text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 mx-1 rounded">
+                        {project.tech_stack.split(',')[1]}
+                       </span>
+                       <span className="text-xs font-mono text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 mx-1 rounded">
+                        {project.tech_stack.split(',')[2]}...
+                       </span>
+                       <span className="text-nepali-red text-sm font-bold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
+                          Read More &rarr;
+                       </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-6 mt-12">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 ${
+                currentPage === 1
+                  ? "bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed"
+                  : "bg-white dark:bg-gray-800 border-2 border-scrapbook-dark dark:border-gray-600 text-scrapbook-dark dark:text-gray-200 hover:bg-scrapbook-bg dark:hover:bg-gray-700 hover:-translate-y-1 shadow-md"
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Previous
+            </button>
+            
+            <span className="text-scrapbook-dark dark:text-gray-300 font-medium">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 ${
+                currentPage === totalPages
+                  ? "bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed"
+                  : "bg-white dark:bg-gray-800 border-2 border-scrapbook-dark dark:border-gray-600 text-scrapbook-dark dark:text-gray-200 hover:bg-scrapbook-bg dark:hover:bg-gray-700 hover:-translate-y-1 shadow-md"
+              }`}
+            >
+              Next
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         )}
       </div>

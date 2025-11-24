@@ -2,6 +2,7 @@
 import React from "react";
 import Reveal from "./Reveal";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const aboutCards = [
   {
@@ -52,12 +53,12 @@ const About = () => {
                 >
                   {/* Image Section */}
                   <div className="relative w-full h-48 bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900">
-                    {/* Blob placeholder - replace with actual image */}
-                    <div className="w-full h-full flex items-center justify-center">
-                      <span className="text-scrapbook-gray dark:text-gray-300 text-sm">
-                        {card.title} Image
-                      </span>
-                    </div>
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
 
                   {/* Content Section */}
